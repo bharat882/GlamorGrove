@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="APP">
+  <head>
+    <style>
+      .directory-table th:nth-child(3),
+      .directory-table td:nth-child(3) {
+        display: none;
+      }
+      .navbar.nav-bar {
+        background-color: #f8f9fa; /* Light background color */
+        border: none; /* Remove border */
+        border-radius: 0; /* Remove border-radius */
+      }
+
+      /* Navbar links */
+      .navbar.nav-bar .navbar-nav > li > a {
+        color: #333; /* Link color */
+      }
+
+      .navbar.nav-bar .navbar-nav > li.active > a {
+        color: #555; /* Active link color */
+      }
+
+      .navbar.nav-bar .navbar-nav > li > a:hover,
+      .navbar.nav-bar .navbar-nav > li > a:focus {
+        color: #555; /* Link color on hover or focus */
+      }
+
+      /* Navbar brand/logo */
+      .navbar.nav-bar .navbar-brand {
+        color: #333; /* Brand color */
+      }
+
+      .navbar.nav-bar .navbar-brand:hover,
+      .navbar.nav-bar .navbar-brand:focus {
+        color: #555; /* Brand color on hover or focus */
+      }
+      .navbar.nav-bar .navbar-nav > li.active > a {
+        color: #f8f9fa;
+      }
+
+      /* Navbar right-aligned links */
+      .navbar.nav-bar .navbar-nav.navbar-right > li > a {
+        color: #333; /* Right-aligned link color */
+      }
+
+      .navbar.nav-bar .navbar-nav.navbar-right > li > a:hover,
+      .navbar.nav-bar .navbar-nav.navbar-right > li > a:focus {
+        color: #555; /* Right-aligned link color on hover or focus */
+      }
+
+      /* Logout icon */
+      .navbar.nav-bar .navbar-right .glyphicon-log-in {
+        margin-right: 5px; /* Add space between icon and text */
+      }
+      .login-form {
+        background-color: azure;
+        padding: 8%;
+      }
+      .directory-div {
+        margin: 0;
+        padding-top: 3%;
+      }
+      .view-div {
+        margin: 0;
+        padding-top: 3%;
+      }
+      .login-div {
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+      }
+      .loginbtn {
+        width: 100%;
+      }
+    </style>
+    <meta
+      charset="UTF-8"
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <title>routing</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="main">
+        <div ng-controller="directoryController">
+          <div ng-view></div>
+        </div>
+      </div>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
+    <script>
+      angular
+
+        //http://127.0.0.1:8080/#/view/0
+        //http://127.0.0.1:8080/FrontEnd/route/#/
+        .module("APP", [])
+        .config(function ($routeProvider) {
+          $routeProvider
+            .when("/homepage", {
+              templateUrl: "/FrontEnd/route/partials/directory.html",
+              controller: "directoryController",
+            })
+            .when("/view/:id", {
+              templateUrl: "/FrontEnd/route/partials/view.html",
+              controller: "viewController",
+            })
+            .when("/", {
+              templateUrl: "/FrontEnd/route/partials/loginPage.html",
+            });
+          //.otherwise({ redirectTo: "/" });
+        })
+        .controller("directoryController", [
+          "$scope",
+          "$http",
+          "$route",
+          function ($scope, $http, $route) {
+            $http
+              .get(
+                "http://localhost/php-angular-mysql-project/BackEnd/index.php"
+              )
+              .then(function (response) {
+                $scope.people = response.data;
+                console.log(response.data);
+              });
+
+            $scope.delete = function (userId) {
+              userId = userId + 1;
+              console.log(userId);
+              $http
+                .delete(
+                  "http://localhost/php-angular-mysql-project/BackEnd/Delete.php?userId=" +
+                    userId
+                )
+                .then(function (response) {
+                  console.log(response);
+
+                  $route.reload();
+                });
+            };
+
+            $scope.toggle = function () {
+              console.log("toggle function");
+              togglebtn = document.getElementById("togglebtn");
+              console.log(togglebtn.innerHTML);
+              state = togglebtn.innerHTML;
+              directoryTelField = document.getElementById("directoryTelField");
+              directoryRecordIdField = document.getElementById(
+                "directoryRecordIdField"
+              );
+              directoryNameField =
+                document.getElementById("directoryNameField");
+              anchor = document.getElementById("anchor");
+              if (state.includes("Edit")) {
+                directoryNameField.removeAttribute("readonly", "readonly");
+                directoryTelField.removeAttribute("readonly", "readonly");
+                anchor.removeAttribute("href");
+
+                togglebtn.innerHTML = "Save";
+              } else {
+                directoryNameField.setAttribute("readonly", "readonly");
+                directoryTelField.setAttribute("readonly", "readonly");
+                togglebtn.innerHTML = "Edit";
+                anchor.setAttribute(
+                  "href",
+                  "/FrontEnd/route/#/view/{{$index}}"
+                );
+                console.log(anchor);
+                console.log(directoryNameField.value);
+                console.log(directoryTelField.value);
+
+                $http.put(
+                  "http://localhost/php-angular-mysql-project/BackEnd/save.php?username=" +
+                    directoryNameField.value +
+                    " &password= " +
+                    directoryTelField.value +
+                    " &recordId= " +
+                    directoryRecordIdField.value
+                );
+              }
+            };
+            $scope.edit = function () {
+              console.log("edit button clicked");
+
+              toggleBtn = document.getElementById("toggleBtn");
+              console.log($scope.ng - click);
+
+              //  nameFieldVisibility = directoryNameField.getAttribute("readonly");
+              console.log(directoryTelField.getAttribute("readonly"));
+              console.log(directoryNameField.getAttribute("readonly"));
+
+              console.log(directoryTelField.getAttribute("readonly"));
+              console.log(directoryNameField.getAttribute("readonly"));
+              //
+            };
+          },
+        ])
+
+        .controller("viewController", [
+          "$scope",
+          "$routeParams",
+          "$http",
+          function ($scope, $routeParams, $http) {
+            $http
+              .get(
+                "http://localhost/php-angular-mysql-project/BackEnd/customerRecordApi.php?id=" +
+                  $routeParams.id
+              )
+              .then(function (response) {
+                $scope.customer = response.data;
+                console.log(response.data);
+              });
+          },
+        ])
+
+        .controller("loginController", [
+          "$http",
+          "$scope",
+          "$location",
+
+          function ($http, $scope, $location) {
+            $scope.login = function login() {
+              var username = $scope.username;
+              var password = $scope.password;
+
+              console.log($scope.password);
+
+              var data = {
+                username: username,
+                password: password,
+              };
+
+              $http
+                .post(
+                  "http://localhost/php-angular-mysql-project/BackEnd/authentication.php",
+                  { username: username, password: password }
+                )
+                .then(function (response) {
+                  // TO DO: FIX THIS
+                  console.log(response);
+                  var username = response.data.userName;
+                  var user_type = response.data.user_type;
+                  var recordId = response.data.recordId + "";
+
+                  //  console.log(typeof recordId);
+                  if (user_type == "admin") {
+                    $location.path("/homepage");
+                  } else {
+                    recordId = recordId - 1;
+                    var path = "/view/" + recordId;
+                    $location.path(path);
+                  }
+                });
+            };
+          },
+        ]);
+    </script>
+  </body>
+</html>

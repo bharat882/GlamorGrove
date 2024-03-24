@@ -1,0 +1,53 @@
+<div ng-controller="loginController" class="login-container login-div">
+  <form class = "login-form">
+    <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <input class="form-control" type="text" ng-model="username" placeholder="Username" required>
+    </div>
+    <div class="input-group pw">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+      <input id="password" type="password" class="form-control" name="password" placeholder="Password" ng-model="password" required>
+    </div>
+    <button type="button" class="btn btn-primary loginbtn" ng-click="login()">Login</button>
+  </form>
+</div>
+
+
+<!--
+  <div ng-controller="loginController" class="maindiv">
+  <div class="center">
+    <form>
+      <div class="input-group">
+        <span class="input-group-addon"
+          ><i class="glyphicon glyphicon-user"></i
+        ></span>
+        <input
+          class="form-control"
+          type="text"
+          ng-model="username"
+          placeholder="Username"
+          required
+        />
+      </div>
+      <div class="input-group pw">
+        <span class="input-group-addon"
+          ><i class="glyphicon glyphicon-lock"></i
+        ></span>
+        <input
+          id="password"
+          type="password"
+          class="form-control"
+          name="password"
+          placeholder="Password"
+          ng-model="password"
+          required
+        />
+      </div>
+
+      <button type="button" class="btn btn-default loginbtn" ng-click="login()">
+        Login
+      </button>
+    </form>
+  </div>
+</div>
+--!>
