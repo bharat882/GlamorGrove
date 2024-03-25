@@ -24,6 +24,13 @@
       .error-message {
         display: none;
       }
+      .userProfilePhoto {
+        padding: 5px;
+      }
+      .shoesdiv {
+        padding: 20px;
+        padding-top: 40px;
+      }
     </style>
 
     <title>routing</title>
@@ -32,7 +39,6 @@
     <div class="container">
       <div ng-controller="directoryController">
         <div ng-view></div>
-
       </div>
     </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
@@ -45,7 +51,6 @@
         .config(function ($routeProvider) {
           $routeProvider
             .when("/homepage", {
-
               templateUrl: "/FrontEnd/route/partials/userRecords.html",
 
               controller: "directoryController",
@@ -53,6 +58,9 @@
             .when("/view/:id", {
               templateUrl: "/FrontEnd/route/partials/view.html",
               controller: "viewController",
+            })
+            .when("/home", {
+              templateUrl: "/FrontEnd/route/partials/userHomePage.html",
             })
             .when("/", {
               templateUrl: "/FrontEnd/route/partials/loginPage.html",
@@ -87,7 +95,6 @@
                   $route.reload();
                 });
             };
-
 
             $scope.toggle = function (index) {
               console.log("toggle function");
@@ -127,11 +134,9 @@
                 $http.put(
                   "http://localhost/php-angular-mysql-project/BackEnd/save.php?username=" +
                     directoryNameField.value +
-
                     " &password=" +
                     directoryTelField.value +
                     " &recordId=" +
-
                     directoryRecordIdField.value
                 );
               }
@@ -177,7 +182,6 @@
 
           function ($http, $scope, $location) {
             $scope.login = function login() {
-
               if ($scope.username == null || $scope.password == null) {
                 console.log("Please enter username and password");
               } else {
@@ -220,7 +224,6 @@
                     //  console.log(typeof recordId);
                   });
               }
-
             };
           },
         ]);
