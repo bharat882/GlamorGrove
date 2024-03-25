@@ -1,30 +1,18 @@
-<div class="view-div">
-  <nav class="navbar navbar-inverse nav-bar">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/FrontEnd/route/#/homepage">..!!..</a>
-      </div>
-      <ul class="nav navbar-nav">
-        <li class="active">
-          <a href="/FrontEnd/route/#/homepage">Home</a>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a href="#"
-            ><span class="glyphicon glyphicon-log-in"></span> Logout</a
-          >
-        </li>
-      </ul>
-    </div>
-  </nav>
 
-  <h1>{{customer.FirstName}} {{customer.LastName}}</h1>
-  <b>{{customer.tel}}</b>
+<nav>
+  <div class="nav-wrapper #bbdefb blue lighten-4">
+    <a href="#" class="brand-logo">Logo</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<h1>{{customer.FirstName}} {{customer.LastName}}</h1>
+<b>{{customer.tel}}</b>
 
-  <hr />
-  <address>
-    {{customer.address}}<br />
-    {{customer.city}}, {{customer.state}} {{customer.zip}}
-  </address>
-</div>
+<hr />
+<address>
+  {{customer.address}}<br />
+  {{customer.city}}, {{customer.state}} {{customer.zip}}
+</address>
+

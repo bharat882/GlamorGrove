@@ -1,53 +1,46 @@
-<div ng-controller="loginController" class="login-container login-div">
-  <form class = "login-form">
-    <div class="input-group">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-      <input class="form-control" type="text" ng-model="username" placeholder="Username" required>
+
+<div ng-controller="loginController" class="container">
+  <div class="card-panel teal hide" id="errormessage">
+    <span class="white-text">Invalid Username or Password </span>
+    <span
+      class="closebtn right-align"
+      onclick="this.parentElement.style.display='none';"
+      >&times;</span
+    >
+  </div>
+
+  <form class="center-align">
+    <div class="input-field col s6">
+      <input
+        id="username"
+        type="text"
+        class="validate"
+        ng-model="username"
+        placeholder="Username"
+        required=""
+        aria-required="true"
+        name="username"
+      />
     </div>
-    <div class="input-group pw">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-      <input id="password" type="password" class="form-control" name="password" placeholder="Password" ng-model="password" required>
+
+    <div class="input-field col s12">
+      <input
+        type="password"
+        class="validate"
+        ng-model="password"
+        placeholder="password"
+        required=""
+        aria-required="true"
+      />
     </div>
-    <button type="button" class="btn btn-primary loginbtn" ng-click="login()">Login</button>
+
+    <button
+      class="btn waves-effect waves-light"
+      type="button"
+      ng-click="login()"
+    >
+      Login
+      <i class="material-icons right">lock</i>
+    </button>
   </form>
 </div>
-
-
-<!--
-  <div ng-controller="loginController" class="maindiv">
-  <div class="center">
-    <form>
-      <div class="input-group">
-        <span class="input-group-addon"
-          ><i class="glyphicon glyphicon-user"></i
-        ></span>
-        <input
-          class="form-control"
-          type="text"
-          ng-model="username"
-          placeholder="Username"
-          required
-        />
-      </div>
-      <div class="input-group pw">
-        <span class="input-group-addon"
-          ><i class="glyphicon glyphicon-lock"></i
-        ></span>
-        <input
-          id="password"
-          type="password"
-          class="form-control"
-          name="password"
-          placeholder="Password"
-          ng-model="password"
-          required
-        />
-      </div>
-
-      <button type="button" class="btn btn-default loginbtn" ng-click="login()">
-        Login
-      </button>
-    </form>
-  </div>
-</div>
---!>
