@@ -1,0 +1,35 @@
+<nav >
+  <div class="nav-wrapper #bbdefb blue lighten-4">
+    <a href="#" class="brand-logo">Logo</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<table class="highlight centered responsive-table">
+  <thead>
+    <tr>
+      <th>UserId</th>
+      <th>Password</th>
+      <th class="hide">RecordId</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="person in people">
+      <td><a id = "anchor{{$index}}" href="/FrontEnd/route/#/view/{{$index}}"
+        ><input type=”text” value="{{person.username}}" readonly="readonly" id = "directoryNameField{{$index}}"/>
+        
+        </a
+        </td>
+      <td><input type="text" value="{{person.password}}" readonly="readonly" id="directoryTelField{{$index}}" />
+      </td>
+      <td ><input class="hide" type="text" value="{{person.recordId}}" readonly="readonly" id="directoryRecordIdField{{$index}}" />
+      </td>
+      <td><div><a class="waves-effect waves-light btn-small" id="togglebtn{{$index}}" ng-click="toggle({{$index}})"> Edit</a> <a class="waves-effect waves-light btn-small" ng-click="delete({{$index}})"> Delete</a></div>
+        
+        </td>
+    </tr>
+
+  </tbody>
+</table>
