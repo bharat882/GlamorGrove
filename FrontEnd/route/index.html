@@ -18,18 +18,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
-      .center-align {
-        padding-top: 15%;
-      }
       .error-message {
         display: none;
       }
       .userProfilePhoto {
         padding: 5px;
       }
-      .shoesdiv {
+      .mainproductdiv {
         padding: 20px;
         padding-top: 40px;
+        padding-left: 120px;
+        padding-right: 120px;
+      }
+      .product-image {
+        height: 250px;
       }
     </style>
 
@@ -61,12 +63,30 @@
             })
             .when("/home", {
               templateUrl: "/FrontEnd/route/partials/userHomePage.html",
+              controller: "userHomePageController",
             })
             .when("/", {
               templateUrl: "/FrontEnd/route/partials/loginPage.html",
             });
           //.otherwise({ redirectTo: "/" });
         })
+        .controller("userHomePageController", [
+          ///////////////////////////////////////////////////////
+
+          "$scope",
+          "$http",
+          "$route",
+          function ($scope, $http, $route) {
+            $http
+              .get(
+                "http://localhost/php-angular-mysql-project/BackEnd/Products.php"
+              )
+              .then(function (response) {
+                $scope.products = response.data;
+                console.log(response.data);
+              });
+          },
+        ])
         .controller("directoryController", [
           "$scope",
           "$http",
