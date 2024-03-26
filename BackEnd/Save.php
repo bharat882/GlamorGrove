@@ -13,7 +13,6 @@ class API{
         
 
         $data = $db -> prepare("Update credentials SET UserName=:username, Password =:password WHERE RecordId =:recordId") ;
-
         $data-> bindParam(':username',$username);
         $data->bindParam(':password',$password);
         $data->bindParam('recordId',$recordId);

@@ -26,6 +26,7 @@ class API{
                  'state' => $OutputData['state'],
                  'city' => $OutputData['city'],
                  'zip' => $OutputData['zip'],
+                 'image'=>$OutputData['image']
             );
         }
 
