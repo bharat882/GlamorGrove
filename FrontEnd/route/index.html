@@ -102,10 +102,7 @@
               userId = userId + 1;
               console.log(userId);
               $http
-                .delete(
-                  "http://localhost/php-angular-mysql-project/BackEnd/Delete.php?userId=" +
-                    userId
-                )
+                .delete("http://localhost:3000/user?userId=" + userId)
                 .then(function (response) {
                   console.log(response);
 
@@ -166,11 +163,10 @@
           "$routeParams",
           "$http",
           function ($scope, $routeParams, $http) {
+            var userId = $scope.userId;
+            console.log(userId);
             $http
-              .get(
-                "http://localhost/php-angular-mysql-project/BackEnd/customerRecordApi.php?id=" +
-                  $routeParams.id
-              )
+              .get("http://localhost:3000/user?userId=" + userId)
               .then(function (response) {
                 $scope.customer = response.data;
                 console.log(response.data);
@@ -207,7 +203,7 @@
                       //  console.log(errormessage);
                     } else {
                       console.log(response.data);
-                      /*
+
                       var username = response.data.userName;
                       var user_type = response.data.user_type;
                       var recordId = response.data.recordId + "";
@@ -221,7 +217,6 @@
                         var path = "/view/" + recordId;
                         $location.path(path);
                       }
-                      */
                     }
 
                     //  console.log(typeof recordId);

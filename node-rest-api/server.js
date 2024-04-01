@@ -7,6 +7,7 @@ var bodyParser = require("body-parser"); //Body Parse middleware to parse form d
 var multer = require("multer"); //Middleware for handling form data
 var login = multer();
 app.use(login.array());
+app.use(bodyParser.json());
 
 const port = 3000;
 
@@ -30,10 +31,11 @@ con.connect(function (err) {
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     res.setHeader("Access-Control-Allow-Credentials", true);
-    // var username = req.body.username;
-    // var password = req.body.password;
+    var username = req.body.username;
+    var password = req.body.password;
     console.log(req.body);
     //console.log(password);
+
     var query =
       'SELECT * FROM credentials WHERE userName = "' +
       username +
@@ -41,6 +43,7 @@ con.connect(function (err) {
       password +
       '"';
 
+    console.log(query);
     con.query(query, function (err, result) {
       if (err) throw err;
 
@@ -107,6 +110,24 @@ con.connect(function (err) {
     res.setHeader("Access-Control-Allow-Credentials", true);
 
     var query = "SELECT * FROM products";
+
+    con.query(query, function (err, result) {
+      if (err) throw err;
+      res.send(result);
+    });
+  });
+
+  app.delete("/user", function (req, res) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+
+    var userId = req.query.userId;
+
+    var query =
+      "DELETE cust, cred FROM customer cust LEFT JOIN credentials cred ON cust.userId = cred.userId WHERE cust.userId = " +
+      userId;
 
     con.query(query, function (err, result) {
       if (err) throw err;

@@ -17,7 +17,7 @@
   </thead>
   <tbody>
     <tr ng-repeat= "person in people">
-      <td><a id = "anchor{{$index}}" href="/FrontEnd/route/#/view/{{$index}}"
+      <td><a id = "anchor{{person.userId}}" href="/FrontEnd/route/#/view/{{person.userId}}"
         ><input type=”text” value="{{person.UserName}}" readonly="readonly" id = "directoryNameField{{$index}}"/>
         
         </a
