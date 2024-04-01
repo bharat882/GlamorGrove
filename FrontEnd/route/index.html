@@ -52,7 +52,11 @@
         .module("APP", [])
         .config(function ($routeProvider) {
           $routeProvider
-            .when("/homepage", {
+            .when("/login", {
+              templateUrl: "/FrontEnd/route/partials/loginPage.html",
+              controller: "loginController",
+            })
+            .when("/adminhomepage", {
               templateUrl: "/FrontEnd/route/partials/userRecords.html",
 
               controller: "directoryController",
@@ -65,10 +69,7 @@
               templateUrl: "/FrontEnd/route/partials/userHomePage.html",
               controller: "userHomePageController",
             })
-            .when("/", {
-              templateUrl: "/FrontEnd/route/partials/loginPage.html",
-            });
-          //.otherwise({ redirectTo: "/" });
+            .otherwise({ redirectTo: "/login" });
         })
         .controller("userHomePageController", [
           ///////////////////////////////////////////////////////
@@ -78,9 +79,7 @@
           "$route",
           function ($scope, $http, $route) {
             $http
-              .get(
-                "http://localhost/php-angular-mysql-project/BackEnd/Products.php"
-              )
+              .get("http://localhost:3000/products")
               .then(function (response) {
                 $scope.products = response.data;
                 console.log(response.data);
@@ -93,12 +92,10 @@
           "$route",
           function ($scope, $http, $route) {
             $http
-              .get(
-                "http://localhost/php-angular-mysql-project/BackEnd/index.php"
-              )
+              .get("http://localhost:3000/adminhomepage")
               .then(function (response) {
                 $scope.people = response.data;
-                console.log(response.data);
+                console.log($scope.people);
               });
 
             $scope.delete = function (userId) {
@@ -117,10 +114,8 @@
             };
 
             $scope.toggle = function (index) {
-              console.log("toggle function");
-              console.log(index);
               togglebtn = document.getElementById("togglebtn" + index);
-              console.log(togglebtn.innerHTML);
+
               state = togglebtn.innerHTML;
               directoryTelField = document.getElementById(
                 "directoryTelField" + index
@@ -147,9 +142,6 @@
                   "href",
                   "/FrontEnd/route/#/view/{{$index}}"
                 );
-                console.log(anchor);
-                console.log(directoryNameField.value);
-                console.log(directoryTelField.value);
 
                 $http.put(
                   "http://localhost/php-angular-mysql-project/BackEnd/save.php?username=" +
@@ -162,17 +154,8 @@
               }
             };
             $scope.edit = function () {
-              console.log("edit button clicked");
-
               toggleBtn = document.getElementById("toggleBtn");
-              console.log($scope.ng - click);
 
-              //  nameFieldVisibility = directoryNameField.getAttribute("readonly");
-              console.log(directoryTelField.getAttribute("readonly"));
-              console.log(directoryNameField.getAttribute("readonly"));
-
-              console.log(directoryTelField.getAttribute("readonly"));
-              console.log(directoryNameField.getAttribute("readonly"));
               //
             };
           },
@@ -208,17 +191,14 @@
                 var username = $scope.username;
                 var password = $scope.password;
 
-                var data = {
-                  username: username,
-                  password: password,
-                };
+                console.log(username);
+                console.log(password);
 
-                console.log(data);
                 $http
-                  .post(
-                    "http://localhost/php-angular-mysql-project/BackEnd/authentication.php",
-                    { username: username, password: password }
-                  )
+                  .post("http://localhost:3000/login", {
+                    username: username,
+                    password: password,
+                  })
                   .then(function (response) {
                     // TO DO: FIX THIS
                     console.log(response);
@@ -226,6 +206,8 @@
                       console.log("incorrect credentials");
                       //  console.log(errormessage);
                     } else {
+                      console.log(response.data);
+                      /*
                       var username = response.data.userName;
                       var user_type = response.data.user_type;
                       var recordId = response.data.recordId + "";
@@ -239,6 +221,7 @@
                         var path = "/view/" + recordId;
                         $location.path(path);
                       }
+                      */
                     }
 
                     //  console.log(typeof recordId);
