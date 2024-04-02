@@ -36,17 +36,27 @@ con.connect(function (err) {
     console.log(req.body);
     //console.log(password);
 
+    // PERFORM JOIN
+
     var query =
-      'SELECT * FROM credentials WHERE userName = "' +
+      'SELECT customer.userId, customer.user_type FROM credentials INNER JOIN customer ON credentials.userId = customer.userId WHERE userName = "' +
       username +
       '" AND password = "' +
       password +
       '"';
 
+    /* var query =
+      'SELECT * FROM credentials, customer WHERE userName = "' +
+      username +
+      '" AND password = "' +
+      password +
+      '" AND credentials.userId = customer.userId';
+*/
     console.log(query);
     con.query(query, function (err, result) {
       if (err) throw err;
 
+      console.log(result);
       if (result.length == 0) res.send("false");
       res.send(result);
     });
@@ -94,7 +104,8 @@ con.connect(function (err) {
 
   // User Details
   app.get("/user", function (req, res) {
-    var userId = req.body.userId;
+    // console.log(req.query.userId);
+    var userId = req.query.userId;
     var query = 'SELECT * FROM customer where userId = "' + userId + '"';
 
     con.query(query, function (err, result) {

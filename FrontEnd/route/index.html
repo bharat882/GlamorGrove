@@ -163,14 +163,16 @@
           "$routeParams",
           "$http",
           function ($scope, $routeParams, $http) {
-            var userId = $scope.userId;
-            console.log(userId);
-            $http
-              .get("http://localhost:3000/user?userId=" + userId)
-              .then(function (response) {
-                $scope.customer = response.data;
-                console.log(response.data);
-              });
+            var userId = $routeParams.id;
+
+            //  console.log("View" + userId);
+            var request = "http://localhost:3000/user?userId=" + userId;
+            console.log(request);
+            $http.get(request).then(function (response) {
+              $scope.customer = response.data[0];
+              console.log(response.data[0]);
+              console.log($scope.customer);
+            });
           },
         ])
 
@@ -196,7 +198,7 @@
                     password: password,
                   })
                   .then(function (response) {
-                    // TO DO: FIX THIS
+                    // TO DO: ADD POPUP ERROR MESSAGE
                     console.log(response);
                     if (response.data == "false") {
                       console.log("incorrect credentials");
@@ -204,17 +206,24 @@
                     } else {
                       console.log(response.data);
 
-                      var username = response.data.userName;
-                      var user_type = response.data.user_type;
-                      var recordId = response.data.recordId + "";
+                      //   var username = responseuserName;
+                      var user_type = response.data[0].user_type;
+                      var userId = response.data[0].userId;
+
+                      // console.log("userId " + userId);
+                      // console.log("user_type " + user_type);
 
                       // navbar = document.getElementById("navbar");
                       // navbar.classList.remove("hide");
                       if (user_type == "admin") {
-                        $location.path("/homepage");
+                        console.log("admin");
+
+                        $location.path("/adminhomepage");
                       } else {
-                        recordId = recordId - 1;
-                        var path = "/view/" + recordId;
+                        console.log("user");
+                        var path = "/home";
+                        // var path = "/view/" + userId;
+                        console.log(path);
                         $location.path(path);
                       }
                     }
