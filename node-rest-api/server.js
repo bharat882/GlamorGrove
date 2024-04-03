@@ -52,11 +52,11 @@ con.connect(function (err) {
       password +
       '" AND credentials.userId = customer.userId';
 */
-    console.log(query);
+    // console.log(query);
     con.query(query, function (err, result) {
       if (err) throw err;
 
-      console.log(result);
+      //   console.log(result);
       if (result.length == 0) res.send("false");
       res.send(result);
     });
@@ -139,9 +139,10 @@ con.connect(function (err) {
     var query =
       "DELETE cust, cred FROM customer cust LEFT JOIN credentials cred ON cust.userId = cred.userId WHERE cust.userId = " +
       userId;
-
+    console.log(query);
     con.query(query, function (err, result) {
       if (err) throw err;
+
       res.send(result);
     });
   });
