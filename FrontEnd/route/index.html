@@ -99,8 +99,8 @@
               });
 
             $scope.delete = function (userId) {
-              userId = userId + 1;
-              console.log(userId);
+              // userId = userId + 1;
+              // console.log(userId);
               $http
                 .delete("http://localhost:3000/user?userId=" + userId)
                 .then(function (response) {
@@ -140,14 +140,11 @@
                   "/FrontEnd/route/#/view/{{$index}}"
                 );
 
-                $http.put(
-                  "http://localhost/php-angular-mysql-project/BackEnd/save.php?username=" +
-                    directoryNameField.value +
-                    " &password=" +
-                    directoryTelField.value +
-                    " &recordId=" +
-                    directoryRecordIdField.value
-                );
+                $http.put("http://localhost:3000/user", {
+                  username: directoryNameField.value,
+                  password: directoryTelField.value,
+                  recordId: directoryRecordIdField.value,
+                });
               }
             };
             $scope.edit = function () {
@@ -209,6 +206,7 @@
                       //   var username = responseuserName;
                       var user_type = response.data[0].user_type;
                       var userId = response.data[0].userId;
+                      var user_type = response.data[0].user_type;
 
                       // console.log("userId " + userId);
                       // console.log("user_type " + user_type);
