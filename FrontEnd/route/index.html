@@ -167,6 +167,7 @@
               });
 
             $scope.delete = function (userId) {
+
               $http
                 .delete("http://localhost:3000/user?userId=" + userId)
                 .then(function (response) {
@@ -272,6 +273,7 @@
                       //   var username = responseuserName;
                       var user_type = response.data[0].user_type;
                       var userId = response.data[0].userId;
+                      var user_type = response.data[0].user_type;
 
                       // console.log("userId " + userId);
                       // console.log("user_type " + user_type);
