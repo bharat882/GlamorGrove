@@ -120,7 +120,9 @@ con.connect(function (err) {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     res.setHeader("Access-Control-Allow-Credentials", true);
 
-    var query = "SELECT * FROM products";
+    var category_id = req.query.category_id;
+    var query =
+      'SELECT * FROM products WHERE category_id ="' + category_id + '"';
 
     con.query(query, function (err, result) {
       if (err) throw err;
@@ -142,6 +144,21 @@ con.connect(function (err) {
 
     con.query(query, function (err, result) {
       if (err) throw err;
+      res.send(result);
+    });
+  });
+
+  app.get("/categories", function (req, res) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+
+    var query = "SELECT * FROM category";
+    console.log(query);
+    con.query(query, function (err, result) {
+      if (err) throw err;
+      console.log(result);
       res.send(result);
     });
   });

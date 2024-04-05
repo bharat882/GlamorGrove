@@ -35,7 +35,7 @@
       }
     </style>
 
-    <title>routing</title>
+    <title>ecommerce</title>
   </head>
   <body>
     <div class="container">
@@ -79,10 +79,78 @@
           "$route",
           function ($scope, $http, $route) {
             $http
-              .get("http://localhost:3000/products")
+              .get("http://localhost:3000/categories")
               .then(function (response) {
-                $scope.products = response.data;
-                console.log(response.data);
+                $scope.categories = response.data;
+                // var categories = response.data;
+                //   console.log($scope.categories.length);
+                var length = $scope.categories.length;
+                for (let i = 0; i < length; i++) {
+                  var category_id = $scope.categories[i].category_id;
+
+                  console.log("1: " + category_id);
+
+                  //    console.log(query);
+                  $http
+                    .get(
+                      "http://localhost:3000/products?category_id=" +
+                        category_id
+                    )
+                    .then(function (response1) {
+                      $scope.products = response1.data;
+                      var products = response1.data;
+                      console.log(products);
+
+                      const categoryDiv = document.createElement("div");
+                      categoryDiv.id = "category" + i;
+                      categoryDiv.className = "category";
+
+                      for (let product of products) {
+                        const productDiv = document.createElement("div");
+                        productDiv.className = "col s3 productdiv";
+
+                        const cardDiv = document.createElement("div");
+                        cardDiv.className = "card blue-grey darken-1";
+
+                        const cardImageDiv = document.createElement("div");
+                        cardImageDiv.className = "card-image";
+
+                        const image = document.createElement("img");
+                        image.src = product.image;
+                        image.className = "product-image";
+
+                        const titleSpan = document.createElement("span");
+                        titleSpan.className = "card-title";
+                        titleSpan.textContent = product.Title;
+
+                        const cardContentDiv = document.createElement("div");
+                        cardContentDiv.className = "card-content center-align";
+
+                        const button = document.createElement("button");
+                        button.className = "btn waves-effect waves-light";
+                        button.setAttribute("type", "button");
+                        button.setAttribute("name", "action");
+
+                        const icon = document.createElement("i");
+                        icon.className = "material-icons";
+                        icon.textContent = "add_shopping_cart";
+
+                        // Append elements to the DOM
+                        button.appendChild(icon);
+                        cardContentDiv.appendChild(button);
+                        cardImageDiv.appendChild(image);
+                        cardImageDiv.appendChild(titleSpan);
+                        cardDiv.appendChild(cardImageDiv);
+                        cardDiv.appendChild(cardContentDiv);
+                        productDiv.appendChild(cardDiv);
+
+                        // Append product div to category div
+                        categoryDiv.appendChild(productDiv);
+                      }
+                      categoryContainer.appendChild(categoryDiv);
+                    });
+                }
+                //      console.log("here");
               });
           },
         ])
@@ -99,8 +167,6 @@
               });
 
             $scope.delete = function (userId) {
-              userId = userId + 1;
-              console.log(userId);
               $http
                 .delete("http://localhost:3000/user?userId=" + userId)
                 .then(function (response) {
@@ -140,14 +206,11 @@
                   "/FrontEnd/route/#/view/{{$index}}"
                 );
 
-                $http.put(
-                  "http://localhost/php-angular-mysql-project/BackEnd/save.php?username=" +
-                    directoryNameField.value +
-                    " &password=" +
-                    directoryTelField.value +
-                    " &recordId=" +
-                    directoryRecordIdField.value
-                );
+                $http.put("http://localhost:3000/user", {
+                  username: directoryNameField.value,
+                  password: directoryTelField.value,
+                  recordId: directoryRecordIdField.value,
+                });
               }
             };
             $scope.edit = function () {
