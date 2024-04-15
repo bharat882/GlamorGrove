@@ -45,6 +45,7 @@
     </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
     <script>
+      
       angular
 
         //http://127.0.0.1:8080/#/view/0
@@ -69,7 +70,10 @@
               templateUrl: "/FrontEnd/route/partials/userHomePage.html",
               controller: "userHomePageController",
             })
-            .otherwise({ redirectTo: "/login" });
+            .when("/productRecords",{
+              templateUrl:"/FrontEnd/route/partials/route/productRecords.html"
+            })
+           
         })
         .controller("userHomePageController", [
   "$scope",
@@ -243,6 +247,18 @@
             };
           },
         ]);
+        
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems, options);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+        
     </script>
   </body>
 </html>
