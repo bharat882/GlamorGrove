@@ -31,7 +31,7 @@
         padding-right: 120px;
       }
       .product-image {
-        height: 250px;
+        height: 100px;
       }
     </style>
 
@@ -45,7 +45,6 @@
     </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
     <script>
-      
       angular
 
         //http://127.0.0.1:8080/#/view/0
@@ -70,37 +69,40 @@
               templateUrl: "/FrontEnd/route/partials/userHomePage.html",
               controller: "userHomePageController",
             })
-            .when("/productRecords",{
-              templateUrl:"/FrontEnd/route/partials/route/productRecords.html"
-            })
-           
+            .when("/productdashboard", {
+              templateUrl: "/FrontEnd/route/partials/product_dashboard.html",
+              controller: "userHomePageController",
+            });
         })
         .controller("userHomePageController", [
-  "$scope",
-  "$http",
-  "$route",
-  function ($scope, $http, $route) {
-    $http
-      .get("http://localhost:3000/categories")
-      .then(function (response) {
-        // Assign retrieved categories to $scope.categories
-        $scope.categories = response.data;
+          "$scope",
+          "$http",
+          "$route",
+          function ($scope, $http, $route) {
+            $http
+              .get("http://localhost:3000/categories")
+              .then(function (response) {
+                // Assign retrieved categories to $scope.categories
+                $scope.categories = response.data;
 
-        // Iterate through each category
-        angular.forEach($scope.categories, function (category) {
-          var category_id = category.category_id;
+                // Iterate through each category
+                angular.forEach($scope.categories, function (category) {
+                  var category_id = category.category_id;
 
-          // Send request to get products for this category
-          $http
-            .get("http://localhost:3000/products?category_id=" + category_id)
-            .then(function (response1) {
-              // Assign retrieved products to category.products
-              category.products = response1.data;
-            });
-        });
-      });
-  },
-])
+                  // Send request to get products for this category
+                  $http
+                    .get(
+                      "http://localhost:3000/products?category_id=" +
+                        category_id
+                    )
+                    .then(function (response1) {
+                      // Assign retrieved products to category.products
+                      category.products = response1.data;
+                    });
+                });
+              });
+          },
+        ])
 
         .controller("directoryController", [
           "$scope",
@@ -115,7 +117,6 @@
               });
 
             $scope.delete = function (userId) {
-
               $http
                 .delete("http://localhost:3000/user?userId=" + userId)
                 .then(function (response) {
@@ -247,18 +248,17 @@
             };
           },
         ]);
-        
-  document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, options);
-  });
 
-  // Or with jQuery
+      document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll(".sidenav");
+        var instances = M.Sidenav.init(elems, options);
+      });
 
-  $(document).ready(function(){
-    $('.sidenav').sidenav();
-  });
-        
+      // Or with jQuery
+
+      $(document).ready(function () {
+        $(".sidenav").sidenav();
+      });
     </script>
   </body>
 </html>
