@@ -130,6 +130,20 @@ con.connect(function (err) {
     });
   });
 
+  app.get("/product", function (req, res) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+
+    var id = req.query.id;
+    var query = "SELECT * FROM `products` WHERE id = " + id;
+    con.query(query, function (err, result) {
+      if (err) throw err;
+      res.send(result);
+    });
+  });
+
   app.delete("/user", function (req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -160,6 +174,88 @@ con.connect(function (err) {
     con.query(query, function (err, result) {
       if (err) throw err;
       console.log(result);
+      res.send(result);
+    });
+  });
+
+  app.delete("/product", function (req, res) {
+    console.log("DELETE product request");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+
+    var id = req.body.id;
+    console.log(id);
+
+    var query = "DELETE FROM `products` WHERE `products`.`id` = " + id;
+    con.query(query, function (err, result) {
+      res.send(result);
+    });
+  });
+
+  app.put("/product", function (req, res) {
+    console.log("PUT product request!");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+
+    var id = req.body.id;
+    var title = req.body.title;
+    var image = req.body.image;
+    var category_id = req.body.category_id;
+
+    console.log(category_id);
+    var query =
+      "UPDATE `products` SET `Title` = '" +
+      title +
+      "', `image` = '" +
+      image +
+      "', `category_id` = " +
+      category_id +
+      " WHERE `products`.`id` = " +
+      id;
+
+    console.log(query);
+    con.query(query, function (err, result) {
+      console.log(result);
+      res.send(result);
+    });
+  });
+
+  //
+  app.post("/product", function (req, res) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    /* var sku = req.body.sku;
+    var name = req.body.sku;
+    var description = req.body.description;
+    var unit_price = req.body.unit_price;
+    var image_url = req.body.image_url;
+    var active = req.body.active;
+    var units_in_stock = req.body.units_in_stock;
+    var category_id = req.body.category_id;
+    */
+    var id = req.body.id;
+    var Title = req.body.Title;
+    var image = req.body.image;
+    var category_id = req.body.category_id;
+
+    var query =
+      "INSERT INTO `products` (`id`, `Title`, `image`, `category_id`) VALUES (NULL, '" +
+      Title +
+      "', '" +
+      image +
+      "', '" +
+      category_id +
+      "')";
+
+    console.log(query);
+
+    con.query(query, [Title, image, category_id], function (err, result) {
       res.send(result);
     });
   });
