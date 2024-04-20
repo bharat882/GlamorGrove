@@ -33,30 +33,37 @@
 </div>
 
 <div class="divider"></div>
-<div class="row mainproductdiv" ng-repeat="category in categories"
+<div class="row" style="padding-left: 20px">
+  <br />
+  <label for="title">Title:</label>
+  <input type="text" id="product_title" ng-model="title" /><br />
+  <label for="image">Image:</label>
+  <input type="text" id="image" ng-model="image" /><br />
+  <label for="category">Category Id:</label>
+  <input type="text" id="category_id" ng-model="category_id" /><br />
+  <button ng-click="add()">Add <i class="material-icons right">add</i></button>
+</div>
 
+<div class="divider"></div>
+
+<div class="row mainproductdiv" ng-repeat="category in categories"
 <p>{{category.description}}</p>
   <div ng-repeat="product in category.products" class="col s3 productdiv">
-        <div class="card blue-grey darken-1">
-          <img class="materialboxed" width="100" src="{{product.image}}">
-      
+    <div class="card blue-grey darken-1">
+      <div class="card-image">
+        <img src="{{product.image}}" class="product-image" />
+        <span class="card-title">{{product.Title}}</span>
+      </div>
+      <div class="card-content center-align">
+        <button
+          class="btn waves-effect waves-light"
+          type="button"
+          name="action"
+          ng-click="view_product({{product.id}})"
+        >
+          <i class="material-icons">search</i>
+        </button>
+      </div>
     </div>
-
-    <div class="card-image">
-      <img src="{{product.image}}" class="product-image" />
-      <span class="card-title">{{product.Title}}</span>
-    </div>
-    <div class="card-content center-align">
-      <button
-        class="btn waves-effect waves-light"
-        type="button"
-        name="action"
-      >
-        <i class="material-icons">add_shopping_cart</i>
-      </button>
-    </div>
-
-    
   </div>
-  
 </div>

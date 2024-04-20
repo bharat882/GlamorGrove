@@ -1,0 +1,44 @@
+<div class="container">
+  <h1>Product Details</h1>
+  <form>
+    <label for="productId">Product Id:</label>
+    <input
+      type="text"
+      id="productId"
+      name="productId"
+      placeholder="Product Id"
+      ng-model="id"
+    />
+    <label for="productName">Product Name:</label>
+    <input
+      type="text"
+      id="productName"
+      name="productName"
+      placeholder="Enter product name"
+      ng-model="title"
+    />
+
+    <label for="productCategory">Product Category:</label>
+    <input
+      type="text"
+      id="productCategory"
+      name="productCategory"
+      placeholder="Enter product category"
+      ng-model="category_id"
+    />
+
+    <label for="productImage">Product Image:</label>
+    <input
+      type="text"
+      id="productImage"
+      name="productImage"
+      placeholder="Enter image URL"
+      ng-model="image"
+    />
+
+    <button type="submit" class="btn-save" ng-click="update()">Save</button>
+    <button type="submit" class="btn-delete" ng-click="deleteProduct()">
+      Delete
+    </button>
+  </form>
+</div>

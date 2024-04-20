@@ -71,9 +71,137 @@
             })
             .when("/productdashboard", {
               templateUrl: "/FrontEnd/route/partials/product_dashboard.html",
-              controller: "userHomePageController",
+              controller: "productDashboardController",
+            })
+            .when("/product", {
+              templateUrl: "/FrontEnd/route/partials/product_details.html",
+              controller: "productDashboardController",
             });
         })
+        .controller("productDashboardController", [
+          "$scope",
+          "$http",
+          "$route",
+          "$location",
+          function ($scope, $http, $route, $location) {
+            $http
+              .get("http://localhost:3000/categories")
+              .then(function (response) {
+                // Assign retrieved categories to $scope.categories
+                $scope.categories = response.data;
+
+                // Iterate through each category
+                angular.forEach($scope.categories, function (category) {
+                  var category_id = category.category_id;
+
+                  // Send request to get products for this category
+                  $http
+                    .get(
+                      "http://localhost:3000/products?category_id=" +
+                        category_id
+                    )
+                    .then(function (response1) {
+                      // Assign retrieved products to category.products
+                      category.products = response1.data;
+                    });
+                });
+              });
+            $scope.view_product = function (id) {
+              console.log(id);
+              $location.url("/product");
+
+              $http
+                .get("http://localhost:3000/product?id=" + id)
+                .then(function (response) {
+                  console.log("Product Details:");
+
+                  var productName = document.getElementById("productName");
+                  var productCategory =
+                    document.getElementById("productCategory");
+                  var productImage = document.getElementById("productImage");
+                  var productId = document.getElementById("productId");
+                  var id = response.data[0].id;
+                  var title = response.data[0].Title;
+                  var image = response.data[0].image;
+                  var category_id = response.data[0].category_id;
+
+                  console.log(id);
+                  console.log(title);
+                  console.log(image);
+                  console.log(category_id);
+
+                  productName.value = title;
+                  productImage.value = image;
+                  productCategory.value = category_id;
+                  productId.value = id;
+                  // productName.innerText = title;
+                  // productCategory.innerText = category_id;
+                  // productImage.innerText = image;
+
+                  // $location.path("/product");
+                });
+            };
+            $scope.deleteProduct = function () {
+              console.log("Delete Product!");
+              var productId = document.getElementById("productId");
+              var id = productId.value;
+              console.log("ID: " + id);
+              $http
+                .delete("http://localhost:3000/product", {
+                  id: id,
+                })
+                .then(function (response) {
+                  console.log(response);
+                });
+              $location.url("/productdashboard");
+            };
+            $scope.update = function () {
+              var productName = document.getElementById("productName");
+              var productCategory = document.getElementById("productCategory");
+              var productImage = document.getElementById("productImage");
+              var productId = document.getElementById("productId");
+              var title = productName.value;
+              var image = productImage.value;
+              var category_id = productCategory.value;
+              var id = productId.value;
+
+              console.log(title);
+              console.log(image);
+              console.log(category_id);
+              console.log(id);
+
+              $http
+                .put("http://localhost:3000/product", {
+                  title: title,
+                  image: image,
+                  category_id: category_id,
+                  id: id,
+                })
+                .then(function (response) {
+                  console.log(response);
+                });
+
+              $location.url("/productdashboard");
+            };
+            $scope.add = function () {
+              var title = $scope.title;
+              var image = $scope.image;
+              var category_id = $scope.category_id;
+
+              $http
+                .post("http://localhost:3000/product", {
+                  Title: title,
+                  image: image,
+                  category_id: category_id,
+                })
+                .then(function (response) {
+                  console.log(response.data);
+                });
+            };
+          },
+          // This is the correct syntax for the last argument
+        ])
+
         .controller("userHomePageController", [
           "$scope",
           "$http",
