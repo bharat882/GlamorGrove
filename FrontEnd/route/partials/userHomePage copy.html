@@ -1,0 +1,46 @@
+<nav>
+  <div class="#bbdefb blue lighten-4 nav-wrapper">
+    <div class="userProfilePhoto">
+      <a href="#" class="brand-logo">
+        <img
+          class="right-align"
+          class="materialboxed"
+          width="65"
+          src="http://localhost:5500/FrontEnd/route/images/0.jpeg"
+        />
+      </a>
+    </div>
+
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><i class="large material-icons">local_grocery_store</i></li>
+      <li><i class="large material-icons">menu</i></li>
+
+    </ul>
+  </div>
+</nav>
+
+<!-- <li><i class="large material-icons">add_shopping_cart </i></li>
+  -->
+
+
+<div class="row mainproductdiv" ng-repeat="category in categories"
+<p>{{category.description}}</p>
+  <div ng-repeat="product in category.products" class="col s3 productdiv">
+    <div class="card blue-grey darken-1">
+      <div class="card-image">
+        <img src="{{product.image}}" class="product-image" />
+        <span class="card-title">{{product.Title}}</span>
+      </div>
+      <div class="card-content center-align">
+        <button
+          class="btn waves-effect waves-light"
+          type="button"
+          name="action"
+        >
+          <i class="material-icons">add_shopping_cart</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

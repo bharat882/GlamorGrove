@@ -1,0 +1,46 @@
+
+<div ng-controller="loginController" class="container">
+  <div class="card-panel teal hide" id="errormessage">
+    <span class="white-text">Invalid Username or Password </span>
+    <span
+      class="closebtn right-align"
+      onclick="this.parentElement.style.display='none';"
+      >&times;</span
+    >
+  </div>
+
+  <form class="center-align">
+    <div class="input-field col s6">
+      <input
+        id="username"
+        type="text"
+        class="validate"
+        ng-model="username"
+        placeholder="Username"
+        required=""
+        aria-required="true"
+        name="username"
+      />
+    </div>
+
+    <div class="input-field col s12">
+      <input
+        type="password"
+        class="validate"
+        ng-model="password"
+        placeholder="password"
+        required=""
+        aria-required="true"
+      />
+    </div>
+
+    <button
+      class="btn waves-effect waves-light"
+      type="button"
+      ng-click="login()"
+    >
+      Login
+      <i class="material-icons right">lock</i>
+    </button>
+  </form>
+</div>
