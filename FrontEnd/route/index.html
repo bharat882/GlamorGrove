@@ -38,11 +38,7 @@
     <title>ecommerce</title>
   </head>
   <body>
-    <div class="container">
-      <div ng-controller="directoryController">
-        <div ng-view></div>
-      </div>
-    </div>
+    <div ng-view></div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
     <script>
       angular
@@ -56,14 +52,12 @@
               templateUrl: "/FrontEnd/route/partials/loginPage.html",
               controller: "loginController",
             })
-            .when("/adminhomepage", {
+            .when("/userRecords", {
               templateUrl: "/FrontEnd/route/partials/userRecords.html",
-
-              
               controller: "directoryController",
             })
-            .when("/view/:id", {
-              templateUrl: "/FrontEnd/route/partials/view.html",
+            .when("/user/:id", {
+              templateUrl: "/FrontEnd/route/partials/user.html",
               controller: "viewController",
             })
             .when("/home", {
@@ -74,9 +68,9 @@
               templateUrl: "/FrontEnd/route/partials/product_dashboard.html",
               controller: "productDashboardController",
             })
-            .when("/product", {
+            .when("/product/:id", {
               templateUrl: "/FrontEnd/route/partials/product_details.html",
-              controller: "productDashboardController",
+              controller: "productController",
             });
         })
         .controller("productDashboardController", [
@@ -107,96 +101,28 @@
                     });
                 });
               });
-            $scope.view_product = function (id) {
-              console.log(id);
-              $location.url("/product");
 
-              $http
-                .get("http://localhost:3000/product?id=" + id)
-                .then(function (response) {
-                  console.log("Product Details:");
-
-                  var productName = document.getElementById("productName");
-                  var productCategory =
-                    document.getElementById("productCategory");
-                  var productImage = document.getElementById("productImage");
-                  var productId = document.getElementById("productId");
-                  var id = response.data[0].id;
-                  var title = response.data[0].Title;
-                  var image = response.data[0].image;
-                  var category_id = response.data[0].category_id;
-
-                  console.log(id);
-                  console.log(title);
-                  console.log(image);
-                  console.log(category_id);
-
-                  productName.value = title;
-                  productImage.value = image;
-                  productCategory.value = category_id;
-                  productId.value = id;
-                  // productName.innerText = title;
-                  // productCategory.innerText = category_id;
-                  // productImage.innerText = image;
-
-                  // $location.path("/product");
-                });
-            };
-            $scope.deleteProduct = function () {
-              console.log("Delete Product!");
-              var productId = document.getElementById("productId");
-              var id = productId.value;
-              console.log("ID: " + id);
-              $http
-                .delete("http://localhost:3000/product", {
-                  id: id,
-                })
-                .then(function (response) {
-                  console.log(response);
-                });
-              $location.url("/productdashboard");
-            };
-            $scope.update = function () {
-              var productName = document.getElementById("productName");
-              var productCategory = document.getElementById("productCategory");
-              var productImage = document.getElementById("productImage");
-              var productId = document.getElementById("productId");
-              var title = productName.value;
-              var image = productImage.value;
-              var category_id = productCategory.value;
-              var id = productId.value;
-
-              console.log(title);
-              console.log(image);
-              console.log(category_id);
-              console.log(id);
-
-              $http
-                .put("http://localhost:3000/product", {
-                  title: title,
-                  image: image,
-                  category_id: category_id,
-                  id: id,
-                })
-                .then(function (response) {
-                  console.log(response);
-                });
-
-              $location.url("/productdashboard");
-            };
             $scope.add = function () {
               var title = $scope.title;
               var image = $scope.image;
               var category_id = $scope.category_id;
+              var price = $scope.price;
 
+              console.log("Add product!");
+              console.log(title);
+              console.log(image);
+              console.log(category_id);
+              console.log(price);
               $http
                 .post("http://localhost:3000/product", {
                   Title: title,
                   image: image,
                   category_id: category_id,
+                  price: price,
                 })
                 .then(function (response) {
                   console.log(response.data);
+                  $route.reload();
                 });
             };
           },
@@ -256,46 +182,149 @@
             };
 
             $scope.toggle = function (index) {
+              console.log("toggle button clicked");
               togglebtn = document.getElementById("togglebtn" + index);
 
               state = togglebtn.innerHTML;
-              directoryTelField = document.getElementById(
-                "directoryTelField" + index
+              console.log("State: " + state);
+              console.log("personUserName" + index);
+              personUserName = document.getElementById(
+                "personUserName" + index
               );
-              directoryRecordIdField = document.getElementById(
-                "directoryRecordIdField" + index
+              personPassword = document.getElementById(
+                "personPassword" + index
               );
-              directoryNameField = document.getElementById(
-                "directoryNameField" + index
-              );
-              anchor = document.getElementById("anchor" + index);
+
+              console.log(personUserName);
+              console.log(personPassword);
+              // console.log("userId" + index);
+              // console.log("password" + index);
+              //      username = document.getElementById("username" + index);
+
+              password = document.getElementById("password" + index);
+              userName = document.getElementById("userName" + index);
+              userId = document.getElementById("personUserId" + index);
+              console.log(userName);
+              console.log(password);
+
+              //  console.log(userId);
+              // anchor = document.getElementById("anchor" + index);
 
               if (state.includes("Edit")) {
-                directoryNameField.removeAttribute("readonly", "readonly");
-                directoryTelField.removeAttribute("readonly", "readonly");
-                anchor.removeAttribute("href");
+                // directoryNameField.removeAttribute("readonly", "readonly");
+                // directoryTelField.removeAttribute("readonly", "readonly");
+                // anchor.removeAttribute("href");
+                userName.classList.remove("hide");
+                password.classList.remove("hide");
+                personUserName.classList.add("hide");
+                personPassword.classList.add("hide");
+                userName.removeAttribute("readonly");
+                password.removeAttribute("readonly");
 
                 togglebtn.innerHTML = "Save";
               } else {
-                directoryNameField.setAttribute("readonly", "readonly");
-                directoryTelField.setAttribute("readonly", "readonly");
+                userName.classList.add("hide");
+                password.classList.add("hide");
+                personUserName.classList.remove("hide");
+                personPassword.classList.remove("hide");
+                userName.setAttribute("readonly", "readonly");
+                password.setAttribute("readonly", "readonly");
                 togglebtn.innerHTML = "Edit";
-                anchor.setAttribute(
-                  "href",
-                  "/FrontEnd/route/#/view/{{$index}}"
-                );
 
                 $http.put("http://localhost:3000/user", {
-                  username: directoryNameField.value,
-                  password: directoryTelField.value,
-                  recordId: directoryRecordIdField.value,
+                  username: userName.value,
+                  password: password.value,
+                  userId: userId.innerHTML,
                 });
+                $route.reload();
               }
             };
             $scope.edit = function () {
               toggleBtn = document.getElementById("toggleBtn");
 
               //
+            };
+          },
+        ])
+
+        .controller("productController", [
+          "$scope",
+          "$routeParams",
+          "$http",
+          "$location",
+          function ($scope, $routeParams, $http, $location) {
+            var id = $routeParams.id;
+            $http
+              .get("http://localhost:3000/product?id=" + id)
+              .then(function (response) {
+                console.log("Product Details:");
+
+                var productName = document.getElementById("productName");
+                var productCategory =
+                  document.getElementById("productCategory");
+                var productImage = document.getElementById("productImage");
+                var productId = document.getElementById("productId");
+                var id = response.data[0].id;
+                var title = response.data[0].Title;
+                var image = response.data[0].image;
+                var category_id = response.data[0].category_id;
+
+                console.log(id);
+                console.log(title);
+                console.log(image);
+                console.log(category_id);
+
+                productName.value = title;
+                productImage.value = image;
+                productCategory.value = category_id;
+                productId.value = id;
+
+                $route.url("/productdashboard");
+                // productName.innerText = title;
+                // productCategory.innerText = category_id;
+                // productImage.innerText = image;
+
+                // $location.path("/product");
+              });
+            $scope.update = function () {
+              var productName = document.getElementById("productName");
+              var productCategory = document.getElementById("productCategory");
+              var productImage = document.getElementById("productImage");
+              var productId = document.getElementById("productId");
+              var title = productName.value;
+              var image = productImage.value;
+              var category_id = productCategory.value;
+              var id = productId.value;
+
+              console.log(title);
+              console.log(image);
+              console.log(category_id);
+              console.log(id);
+
+              $http
+                .put("http://localhost:3000/product", {
+                  title: title,
+                  image: image,
+                  category_id: category_id,
+                  id: id,
+                })
+                .then(function (response) {
+                  console.log(response);
+                  $route.reload();
+                });
+            };
+
+            $scope.deleteProduct = function () {
+              console.log("Delete Product!");
+              var productId = document.getElementById("productId");
+              var id = productId.value;
+              console.log("ID: " + id);
+              $http
+                .delete("http://localhost:3000/product?id=" + id)
+                .then(function (response) {
+                  console.log(response);
+                  $location.url("/productdashboard");
+                });
             };
           },
         ])
@@ -361,7 +390,7 @@
                       if (user_type == "admin") {
                         console.log("admin");
 
-                        $location.path("/adminhomepage");
+                        $location.path("/productdashboard");
                       } else {
                         console.log("user");
                         var path = "/home";

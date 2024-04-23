@@ -14,6 +14,7 @@
     .nav-bar {
       background-color: transparent !important;
     }
+
     .container-1 {
       margin: 0;
       padding: 0;
@@ -43,9 +44,8 @@
       font-weight: bold; /* Make the font bolder */
     }
     .productdiv {
-      width: 30%;
+      width: 25%;
       height: 450px;
-      margin: 10px;
     }
     .category-div {
       width: 100%; /* Make the div 100% wide */
@@ -54,18 +54,27 @@
       width: 200px;
       height: 300px;
     }
-    .padding{
+    .padding {
       padding-left: 10px;
+    }
+    .category-description {
+      color: black;
+
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="discount-div center-align">
+  <div class="discount-div center-align card">
     <h5>Get 25% OFF on your first order. Order Now</h5>
   </div>
-  <br />
-  <nav>
-    <div class="nav-wrapper #ffcc80 orange lighten-3">
+
+  <nav class="N/A transparent">
+    <div class="card nav-wrapper">
       <a href="#!" class="brand-logo left"
         ><img
           src="http://localhost:5500/FrontEnd/route/images/background/logo.png"
@@ -77,30 +86,45 @@
           "
       /></a>
       <ul class="right hide-on-med-and-down">
-        <li class="active"><a href="http://127.0.0.1:5500/FrontEnd/route/#/home">Home</a></li>
-        <li><a href="badges.html">Categories</a></li>
-        <li><a href="collapsible.html">About</a></li>
-        <li><a href="collapsible.html">Contact</a></li>
+        <li class="active">
+          <a
+            href="http://127.0.0.1:5500/FrontEnd/route/#/home"
+            style="color: black"
+            >Home</a
+          >
+        </li>
+        <li><a href="badges.html" style="color: black">Categories</a></li>
+        <li><a href="collapsible.html" style="color: black">About</a></li>
+        <li><a href="collapsible.html" style="color: black">Contact</a></li>
         <li>
           <a style="display: flex; align-items: center">
-            <i class="material-icons" style="margin-right: 5px">search</i>
-            <input type="text" placeholder="Search product" />
+            <i class="material-icons black-text" style="margin-right: 5px"
+              >search</i
+            >
+            <input
+              type="text"
+              placeholder="Search product"
+              style="color: black"
+            />
           </a>
         </li>
 
         <li>
           <a href="collapsible.html"
-            ><i class="material-icons">shopping_cart</i></a
+            ><i class="material-icons black-text">shopping_cart</i></a
           >
         </li>
         <li>
-          <a href="collapsible.html"><i class="material-icons">person</i></a>
+          <a href="collapsible.html"
+            ><i class="material-icons black-text">person</i></a
+          >
         </li>
       </ul>
     </div>
   </nav>
   <br />
-  <div class="container container-1">
+
+  <section class="container-1">
     <div class="view-collection-container">
       <h3 class="fresh-arrivals">Fresh Arrivals Online</h3>
       <h4 class="new-collection">Discover Our Newest Collection Today.</h4>
@@ -115,30 +139,34 @@
         <i class="material-icons right">arrow_forward</i>
       </button>
     </div>
-  </div>
-  <div class="container container-2">
-    <br />
-    <br />
-    <div class="row category-div" ng-repeat="category in categories">
-      <div class="row center-align">{{category.description}}</div>
+  </section>
+
+  <section>
+    <div
+      class="row category-div center-align"
+      ng-repeat="category in categories"
+    >
+      <div class="row center-align category-description">
+        {{category.description}}
+      </div>
 
       <div
         ng-repeat="product in category.products"
-        class="col productdiv"
+        class="col productdiv center-align"
       >
-      <div class="card">
-        <div class="card-image">
-          <img src="{{product.image}}" class="product-image">
+        <div class="card">
+          <div class="card-image">
+            <img src="{{product.image}}" class="product-image" />
+          </div>
+        </div>
+        <div class="row padding">{{product.Title}}</div>
+        <div class="row padding">
+          <div class="col padding">
+            <a class="waves-effect waves-light btn">In Stock</a>
+          </div>
+          <div class="col padding">${{product.price}}</div>
         </div>
       </div>
-      <div class="row padding">{{product.Title}}</div>
-      <div class="row padding">
-        <div class="col padding"><a class="waves-effect waves-light btn">In Stock</a></div>
-      <div class="col padding">${{product.price}}</div>  </div>
-      <di
     </div>
-
-    <div class=""></div>
-  </div>
+  </section>
 </body>
-
