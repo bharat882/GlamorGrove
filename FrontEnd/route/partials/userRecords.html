@@ -1,35 +1,113 @@
-<nav >
-  <div class="nav-wrapper #bbdefb blue lighten-4">
-    <a href="#" class="brand-logo">Logo</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="#">Logout</a></li>
-    </ul>
+<head>
+  <style>
+    .table-head {
+      background-color: antiquewhite;
+    }
+    .margin {
+      margin-top: 20px;
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <br />
+
+  <nav>
+    <div class="nav-wrapper #ffcc80 orange lighten-3 card">
+      <a href="#!" class="brand-logo left"
+        ><img
+          src="http://localhost:5500/FrontEnd/route/images/background/logo.png"
+          style="
+            width: 60px;
+            height: 50px;
+            padding-top: 13px;
+            padding-left: 15px;
+          "
+      /></a>
+      <ul class="right hide-on-med-and-down">
+        <li class="active">
+          <a href="http://127.0.0.1:5500/FrontEnd/route/#/home">Home</a>
+        </li>
+        <li><a href="badges.html">Categories</a></li>
+        <li><a href="collapsible.html">About</a></li>
+        <li><a href="collapsible.html">Contact</a></li>
+        <li>
+          <a style="display: flex; align-items: center">
+            <i class="material-icons" style="margin-right: 5px">search</i>
+            <input type="text" placeholder="Search product" />
+          </a>
+        </li>
+
+        <li>
+          <a href="collapsible.html"
+            ><i class="material-icons">shopping_cart</i></a
+          >
+        </li>
+        <li>
+          <a href="collapsible.html"><i class="material-icons">person</i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="margin">
+    <div class="row">
+      <div class="col s12" ng-repeat="person in people">
+        <div class="card">
+          <div class="card-content">
+            <p>
+              <strong>User Name:</strong>
+              <span id="personUserName{{person.userId}}"
+                >{{person.UserName}}</span
+              >
+              <span class="hide" id="personUserId{{person.userId}}"
+                >{{person.userId}}</span
+              >
+            </p>
+            <input
+              class="hide"
+              type="text"
+              value="{{person.UserName}}"
+              readonly="readonly"
+              id="userName{{person.userId}}"
+            />
+            <p>
+              <strong>Password:</strong>
+              <span id="personPassword{{person.userId}}"
+                >{{person.Password}}</span
+              >
+            </p>
+
+            <input
+              class="hide"
+              type="text"
+              value="{{person.Password}}"
+              readonly="readonly"
+              id="password{{person.userId}}"
+            />
+          </div>
+          <div class="card-action">
+            <a
+              id="anchor{{person.userId}}"
+              href="/FrontEnd/route/#/user/{{person.userId}}"
+              >{{person.UserName}}</a
+            >
+            <a
+              class="waves-effect waves-light btn-small"
+              id="togglebtn{{person.userId}}"
+              ng-click="toggle({{person.userId}})"
+              >Edit</a
+            >
+            <a
+              class="waves-effect waves-light btn-small"
+              ng-click="delete({{person.userId}})"
+              >Delete</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</nav>
-
-<table class="highlight centered responsive-table">
-  <thead>
-    <tr>
-      <th>UserId</th>
-      <th>Password</th>
-      <th class="hide">RecordId</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat= "person in people">
-      <td><a id = "anchor{{person.userId}}" href="/FrontEnd/route/#/view/{{person.userId}}"
-        ><input type=”text” value="{{person.UserName}}" readonly="readonly" id = "directoryNameField{{person.userId}}"/>
-        
-        </a
-        </td>
-      <td><input type="text" value="{{person.Password}}" readonly="readonly" id="directoryTelField{{person.userId}}" />
-      </td>
-      <td ><input class="hide" type="text" value="{{person.RecordId}}" readonly="readonly" id="directoryRecordIdField{{person.userId}}" />
-      </td>
-      <td><div><a class="waves-effect waves-light btn-small" id="togglebtn{{person.userId}}" ng-click="toggle({{person.userId}})"> Edit</a> <a class="waves-effect waves-light btn-small" ng-click="delete({{person.userId}})"> Delete</a></div>
-        
-        </td>
-    </tr>
-
-  </tbody>
-</table>
+</body>

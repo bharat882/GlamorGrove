@@ -1,46 +1,79 @@
+<head>
+  <style>
+    html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 
-<div ng-controller="loginController" class="container">
-  <div class="card-panel teal hide" id="errormessage">
-    <span class="white-text">Invalid Username or Password </span>
-    <span
-      class="closebtn right-align"
-      onclick="this.parentElement.style.display='none';"
-      >&times;</span
-    >
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url("http://localhost:5500/FrontEnd/route/images/background/background3.png"); /* Replace 'your_image.jpg' with the path to your image */
+      background-size: cover;
+      background-position: center;
+      height: 100%; /* Set the height of the background to fill the viewport */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .main-container{    
+     
+      border: 1px solid #e0e0e0; /* Set a light gray border */
+      padding: 20px; /* Add padding for spacing inside the border */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+
+    }
+    .login-container {
+      width: 500px;
+
+    }
+    .username{
+      border: none; /* Remove the border */
+            outline: none; /* Remove the outline */
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="main-container"><div class="container login-container">
+    <br>
+    <br>
+    <div class="row center-align"><img src = "http://localhost:5500/FrontEnd/route/images/background/logo.png" style="width:90px"></div>
+    <div class="row"><h3>Sign In</h3></div>
+    <div class="row">
+      <label for="username"
+        ><b><h5>Username</h5></b></label
+      >
+    </div>
+    <div class="row ">
+      <input id="username" type="text" ng-model="username" name="username" class="username"/>
+    </div>
+    <div class="row">
+      <label for="password"
+        ><b><h5>Password</h5></b></label
+      >
+    </div>
+    <div class="row ">
+      <input id="password" type="text" ng-model="password" name="password" />
+    </div>
+    <br>
+    <div class="row center-align">
+      <button
+        class="btn waves-effect waves-light #ff8a80 red accent-1"
+        type="button"
+        ng-click="login()"
+      >
+        Login
+        <i class="material-icons right">lock</i>
+      </button>
+    </div>
+    <br>
+    <div class="row center align">
+      <p>I don't have an account    <button class = "#ff8a80 red accent-1 btn waves-effect waves-light small">Sign up</button></p>
   </div>
-
-  <form class="center-align">
-    <div class="input-field col s6">
-      <input
-        id="username"
-        type="text"
-        class="validate"
-        ng-model="username"
-        placeholder="Username"
-        required=""
-        aria-required="true"
-        name="username"
-      />
-    </div>
-
-    <div class="input-field col s12">
-      <input
-        type="password"
-        class="validate"
-        ng-model="password"
-        placeholder="password"
-        required=""
-        aria-required="true"
-      />
-    </div>
-
-    <button
-      class="btn waves-effect waves-light"
-      type="button"
-      ng-click="login()"
-    >
-      Login
-      <i class="material-icons right">lock</i>
-    </button>
-  </form>
+  </div>
+</body>
 </div>
+  

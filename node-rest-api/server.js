@@ -70,15 +70,15 @@ con.connect(function (err) {
     res.setHeader("Access-Control-Allow-Credentials", true);
     var username = req.body.username;
     var password = req.body.password;
-    var recordId = req.body.recordId;
+    var userId = req.body.userId;
 
     var query =
       'Update credentials SET Username = "' +
       username +
       '" ,Password = "' +
       password +
-      '" WHERE RecordId = "' +
-      recordId +
+      '" WHERE userId = "' +
+      userId +
       '"';
 
     console.log(query);
@@ -185,11 +185,13 @@ con.connect(function (err) {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     res.setHeader("Access-Control-Allow-Credentials", true);
 
-    var id = req.body.id;
-    console.log(id);
+    var id = req.query.id;
+    console.log(req.body);
 
     var query = "DELETE FROM `products` WHERE `products`.`id` = " + id;
+    console.log(query);
     con.query(query, function (err, result) {
+      console.log(result);
       res.send(result);
     });
   });
@@ -239,18 +241,20 @@ con.connect(function (err) {
     var units_in_stock = req.body.units_in_stock;
     var category_id = req.body.category_id;
     */
-    var id = req.body.id;
     var Title = req.body.Title;
     var image = req.body.image;
     var category_id = req.body.category_id;
+    var price = req.body.price;
 
     var query =
-      "INSERT INTO `products` (`id`, `Title`, `image`, `category_id`) VALUES (NULL, '" +
+      "INSERT INTO `products` (`id`, `Title`, `image`, `category_id`, `price`) VALUES (NULL, '" +
       Title +
       "', '" +
       image +
       "', '" +
       category_id +
+      "','" +
+      price +
       "')";
 
     console.log(query);
