@@ -124,8 +124,10 @@ con.connect(function (err) {
     var query =
       'SELECT * FROM products WHERE category_id ="' + category_id + '"';
 
+    console.log(query);
     con.query(query, function (err, result) {
       if (err) throw err;
+      // console.log(result);
       res.send(result);
     });
   });
@@ -136,10 +138,28 @@ con.connect(function (err) {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     res.setHeader("Access-Control-Allow-Credentials", true);
 
-    var id = req.query.id;
-    var query = "SELECT * FROM `products` WHERE id = " + id;
+    var id = req.query.product_id;
+    var query = "SELECT * FROM `products` WHERE product_id = " + id;
     con.query(query, function (err, result) {
       if (err) throw err;
+      res.send(result);
+    });
+  });
+
+  app.delete("/product", function (req, res) {
+    console.log("DELETE product request");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+
+    var id = req.query.id;
+    console.log(req.body);
+
+    var query = "DELETE FROM `products` WHERE `products`.`product_id` = " + id;
+    console.log(query);
+    con.query(query, function (err, result) {
+      console.log(result);
       res.send(result);
     });
   });
@@ -178,24 +198,6 @@ con.connect(function (err) {
     });
   });
 
-  app.delete("/product", function (req, res) {
-    console.log("DELETE product request");
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    res.setHeader("Access-Control-Allow-Credentials", true);
-
-    var id = req.query.id;
-    console.log(req.body);
-
-    var query = "DELETE FROM `products` WHERE `products`.`id` = " + id;
-    console.log(query);
-    con.query(query, function (err, result) {
-      console.log(result);
-      res.send(result);
-    });
-  });
-
   app.put("/product", function (req, res) {
     console.log("PUT product request!");
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -203,21 +205,40 @@ con.connect(function (err) {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     res.setHeader("Access-Control-Allow-Credentials", true);
 
-    var id = req.body.id;
-    var title = req.body.title;
-    var image = req.body.image;
+    var product_id = req.body.product_id;
+    var product_name = req.body.product_name;
+    var description = req.body.description;
+    var image_url = req.body.image_url;
     var category_id = req.body.category_id;
-
-    console.log(category_id);
+    var price = req.body.price;
+    var sku = req.body.sku;
+    var units_in_stock = req.body.units_in_stock;
+    var active = req.body.active;
+    var featured = req.body.featured;
+    var last_updated = new Date().toISOString().slice(0, 19).replace("T", " ");
     var query =
-      "UPDATE `products` SET `Title` = '" +
-      title +
-      "', `image` = '" +
-      image +
+      "UPDATE `products` SET `product_name` = '" +
+      product_name +
+      "', `description` = '" +
+      description +
+      "', `image_url` = '" +
+      image_url +
       "', `category_id` = " +
       category_id +
-      " WHERE `products`.`id` = " +
-      id;
+      ", `price` = " +
+      price +
+      ", `sku` = '" +
+      sku +
+      "', `units_in_stock` = " + // Added missing comma and single quotes
+      units_in_stock +
+      ", `active` = " +
+      active +
+      ", `featured` = " +
+      featured +
+      ", `last_updated` = '" +
+      last_updated +
+      "' WHERE `product_id` = " +
+      product_id;
 
     console.log(query);
     con.query(query, function (err, result) {
@@ -228,38 +249,64 @@ con.connect(function (err) {
 
   //
   app.post("/product", function (req, res) {
+    console.log("Post request");
+
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     res.setHeader("Access-Control-Allow-Credentials", true);
-    /* var sku = req.body.sku;
-    var name = req.body.sku;
+
+    var product_name = req.body.product_name;
     var description = req.body.description;
-    var unit_price = req.body.unit_price;
     var image_url = req.body.image_url;
-    var active = req.body.active;
-    var units_in_stock = req.body.units_in_stock;
-    var category_id = req.body.category_id;
-    */
-    var Title = req.body.Title;
-    var image = req.body.image;
     var category_id = req.body.category_id;
     var price = req.body.price;
+    var sku = req.body.sku;
+    var units_in_stock = req.body.units_in_stock;
+    var active = req.body.active;
+    var featured = req.body.featured;
+    var creation_date = new Date().toISOString().slice(0, 19).replace("T", " ");
+    var last_updated = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+    console.log("Product Name:", req.body.product_name);
+    console.log("Description:", req.body.description);
+    console.log("Image URL:", req.body.image_url);
+    console.log("Category ID:", req.body.category_id);
+    console.log("Price:", req.body.price);
+    console.log("SKU:", req.body.sku);
+    console.log("Units in Stock:", req.body.units_in_stock);
+    console.log("Active:", req.body.active);
+    console.log("Featured:", req.body.featured);
 
     var query =
-      "INSERT INTO `products` (`id`, `Title`, `image`, `category_id`, `price`) VALUES (NULL, '" +
-      Title +
+      "INSERT INTO `products` (`product_name`, `description`, `image_url`, `category_id`, `price`, `sku`, `units_in_stock`, `active`, `featured`, `creation_date`, `last_updated`) VALUES ('" +
+      product_name +
       "', '" +
-      image +
+      description +
       "', '" +
+      image_url +
+      "', " +
       category_id +
-      "','" +
+      ", " +
       price +
+      ", '" +
+      sku +
+      "', " +
+      units_in_stock +
+      ", " + // Added the missing comma
+      active +
+      ", " +
+      featured +
+      ", '" +
+      creation_date +
+      "', '" +
+      last_updated +
       "')";
 
-    console.log(query);
+    //  console.log(query);
 
-    con.query(query, [Title, image, category_id], function (err, result) {
+    con.query(query, function (err, result) {
+      console.log(res);
       res.send(result);
     });
   });

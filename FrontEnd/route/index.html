@@ -98,6 +98,7 @@
                     .then(function (response1) {
                       // Assign retrieved products to category.products
                       category.products = response1.data;
+                      console.log(response1);
                     });
                 });
               });
@@ -137,6 +138,8 @@
             $http
               .get("http://localhost:3000/categories")
               .then(function (response) {
+                console.log("GET CATEGORIES RESPONSE:");
+                console.log(response);
                 // Assign retrieved categories to $scope.categories
                 $scope.categories = response.data;
 
@@ -151,6 +154,8 @@
                         category_id
                     )
                     .then(function (response1) {
+                      console.log("GET PRODUCTS RESPONSE");
+                      console.log(response1);
                       // Assign retrieved products to category.products
                       category.products = response1.data;
                     });
@@ -255,15 +260,16 @@
           function ($scope, $routeParams, $http, $location) {
             var id = $routeParams.id;
             $http
-              .get("http://localhost:3000/product?id=" + id)
+              .get("http://localhost:3000/product?product_id=" + id)
               .then(function (response) {
                 console.log("Product Details:");
+                console.log(response.data[0]);
 
                 var productName = document.getElementById("productName");
                 var productCategory =
                   document.getElementById("productCategory");
                 var productImage = document.getElementById("productImage");
-                var productId = document.getElementById("productId");
+                var productId = document.getElementById("product_id");
                 var id = response.data[0].id;
                 var title = response.data[0].Title;
                 var image = response.data[0].image;
@@ -287,26 +293,41 @@
                 // $location.path("/product");
               });
             $scope.update = function () {
-              var productName = document.getElementById("productName");
-              var productCategory = document.getElementById("productCategory");
-              var productImage = document.getElementById("productImage");
-              var productId = document.getElementById("productId");
-              var title = productName.value;
-              var image = productImage.value;
-              var category_id = productCategory.value;
-              var id = productId.value;
+              var product_id = document.getElementById("product_id").value;
+              var product_name = document.getElementById("product_name").value;
+              var description = document.getElementById("description").value;
+              var image_url = document.getElementById("image_url").value;
+              var category_id = document.getElementById("category_id").value; // Added 'var'
+              var price = document.getElementById("price").value; // Added 'var'
+              var sku = document.getElementById("sku").value; // Added 'var'
+              var active = document.getElementById("active").value; // Added 'var'
+              var featured = document.getElementById("featured").value; // Added 'var'
+              var units_in_stock =
+                document.getElementById("units_in_stock").value; // Added 'var'
 
-              console.log(title);
-              console.log(image);
-              console.log(category_id);
-              console.log(id);
+              console.log("Product ID:", product_id);
+              console.log("Product Name:", product_name);
+              console.log("Description:", description);
+              console.log("Image URL:", image_url);
+              console.log("Category ID:", category_id);
+              console.log("Price:", price);
+              console.log("SKU:", sku);
+              console.log("Active:", active);
+              console.log("Featured:", featured);
+              console.log("Units in Stock:", units_in_stock);
 
               $http
                 .put("http://localhost:3000/product", {
-                  title: title,
-                  image: image,
+                  product_id: product_id,
+                  product_name: product_name,
+                  description: description,
+                  image_url: image_url,
                   category_id: category_id,
-                  id: id,
+                  price: price,
+                  sku: sku,
+                  active: active,
+                  featured: featured,
+                  units_in_stock: units_in_stock,
                 })
                 .then(function (response) {
                   console.log(response);

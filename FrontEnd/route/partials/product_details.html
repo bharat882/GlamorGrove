@@ -1,22 +1,31 @@
 <div class="container">
   <h1>Product Details</h1>
   <form>
-    <label for="productId">Product Id:</label>
+    <label for="product_id">Product Id:</label>
     <input
       type="text"
-      id="productId"
+      id="product_id"
       name="productId"
       placeholder="Product Id"
-      ng-model="id"
+      ng-model="product_id"
     />
-    <label for="productName">Product Name:</label>
+
+    <label for="product_name">Product Name:</label>
     <input
       type="text"
-      id="productName"
+      id="product_name"
       name="productName"
       placeholder="Enter product name"
-      ng-model="title"
+      ng-model="product_name"
     />
+
+    <label for="description">Description:</label>
+    <textarea
+      id="description"
+      name="description"
+      placeholder="Enter product description"
+      ng-model="description"
+    ></textarea>
 
     <label for="productCategory">Product Category:</label>
     <input
@@ -33,7 +42,40 @@
       id="productImage"
       name="productImage"
       placeholder="Enter image URL"
-      ng-model="image"
+      ng-model="image_url"
+    />
+
+    <label for="price">Price:</label>
+    <input
+      type="number"
+      id="price"
+      name="price"
+      placeholder="Enter product price"
+      ng-model="price"
+    />
+
+    <label for="sku">SKU:</label>
+    <input
+      type="text"
+      id="sku"
+      name="sku"
+      placeholder="Enter product SKU"
+      ng-model="sku"
+    />
+
+    <label for="active">Active:</label>
+    <input type="checkbox" id="active" name="active" ng-model="active" />
+
+    <label for="featured">Featured:</label>
+    <input type="checkbox" id="featured" name="featured" ng-model="featured" />
+
+    <label for="unitsInStock">Units in Stock:</label>
+    <input
+      type="number"
+      id="unitsInStock"
+      name="unitsInStock"
+      placeholder="Enter units in stock"
+      ng-model="units_in_stock"
     />
 
     <button type="submit" class="btn-save" ng-click="update()">Save</button>
