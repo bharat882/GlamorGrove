@@ -89,6 +89,7 @@
                 angular.forEach($scope.categories, function (category) {
                   var category_id = category.category_id;
 
+                  console.log("Fetching product for " + category_id);
                   // Send request to get products for this category
                   $http
                     .get(
