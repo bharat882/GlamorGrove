@@ -35,7 +35,7 @@
       }
     </style>
 
-    <title>ecommerce</title>
+    <title>GlamorGrove</title>
   </head>
   <body>
     <div ng-view></div>
@@ -266,34 +266,49 @@
                 console.log("Product Details:");
                 console.log(response.data[0]);
 
-                var productName = document.getElementById("productName");
-                var productCategory =
-                  document.getElementById("productCategory");
-                var productImage = document.getElementById("productImage");
-                var productId = document.getElementById("product_id");
-                var id = response.data[0].id;
-                var title = response.data[0].Title;
-                var image = response.data[0].image;
+                var product_id = response.data[0].product_id;
+                var product_name = response.data[0].product_name;
+                var description = response.data[0].description;
+                var image_url = response.data[0].image_url;
                 var category_id = response.data[0].category_id;
+                var price = response.data[0].price;
+                var sku = response.data[0].sku;
+                var units_in_stock = response.data[0].units_in_stock;
+                var acive = response.data[0].acive;
+                var featured = response.data[0].featured;
+                var creation_date = response.data[0].creation_date;
+                var last_updated = response.data[0].last_updated;
 
-                console.log(id);
-                console.log(title);
-                console.log(image);
-                console.log(category_id);
+                var product_id_field = document.getElementById("product_id");
+                var product_name_field =
+                  document.getElementById("product_name");
+                var description_field = document.getElementById("description");
+                var image_url_field = document.getElementById("productImage");
+                var category_id_field =
+                  document.getElementById("productCategory");
+                var price_field = document.getElementById("price");
+                var sku_field = document.getElementById("sku");
+                var units_in_stock_field =
+                  document.getElementById("unitsInStock");
+                var active_field = document.getElementById("active");
+                var featured_field = document.getElementById("featured");
 
-                productName.value = title;
-                productImage.value = image;
-                productCategory.value = category_id;
-                productId.value = id;
+                // TO DO: add creation date and last updated fields
 
-                $route.url("/productdashboard");
-                // productName.innerText = title;
-                // productCategory.innerText = category_id;
-                // productImage.innerText = image;
-
-                // $location.path("/product");
+                product_id_field.value = product_id;
+                product_name_field.value = product_name;
+                description_field.value = description;
+                image_url_field.value = image_url;
+                category_id_field.value = category_id;
+                price_field.value = price;
+                sku_field.value = sku;
+                units_in_stock_field.value = units_in_stock;
+                active_field.value = active;
+                featured_field.value = featured;
               });
             $scope.update = function () {
+              console.log("Updating product in /product:id");
+
               var product_id = document.getElementById("product_id").value;
               var product_name = document.getElementById("product_name").value;
               var description = document.getElementById("description").value;

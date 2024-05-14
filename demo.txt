@@ -1,0 +1,14 @@
+{
+    "product_id": 21,
+    "product_name": "Product 1",
+    "description": "Description for Product 1",
+    "image_url": "http://localhost:5500/FrontEnd/route/images/shoes/01.jpg",
+    "category_id": 1,
+    "price": 100,
+    "sku": "SKU001",
+    "units_in_stock": 20,
+    "active": 1,
+    "featured": 1,
+    "creation_date": "2024-04-24T18:45:30.000Z",
+    "last_updated": "2024-04-24T19:02:45.000Z"
+}
